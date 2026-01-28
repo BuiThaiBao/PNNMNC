@@ -12,13 +12,15 @@ class LoginController extends Controller
     {
         return view('login');
     }
-    public function register()
+
+    public function inputAge()
     {
-        return view('register');
+        return view('inputAge');
     }
-    public function checkRegister(Request $request)
+    public function checkAge(Request $request)
     {
-        return "Register successfully";
+        session()->put('age', $request->input('age'));
+        return redirect()->route('product');
     }
     public function checkLogin(Request $request)
     {
