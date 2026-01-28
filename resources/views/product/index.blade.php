@@ -33,6 +33,7 @@
     </table>
     <a href="{{ route('add') }}">Add Product</a>
     <a href="{{ route('login') }}">Login</a>
+    <a href="{{ route('signIn') }}">Sign In</a>
 
 </body>
 

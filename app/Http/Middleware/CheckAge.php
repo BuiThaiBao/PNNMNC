@@ -20,7 +20,7 @@ class CheckAge
         }
         if (session("age") < 18) {
             return response()->json([
-                'message' => 'You are not old enough to access this page',
+                'message' => 'Không được phép truy cập',
             ], 403);
         }
         return $next($request);
