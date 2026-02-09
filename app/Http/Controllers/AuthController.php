@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -20,5 +21,25 @@ class AuthController extends Controller
             return "Đăng ký thất bại";
         }
         return "Đăng ký thành công";
+    }
+
+    public function showLoginForm()
+    {
+        return view('login');
+    }
+    public function checkLogin(Request $request)
+    {
+        $account = $request->only('email', 'password');
+        if (Auth::attempt($account)) {
+            return redirect('/admin');
+        } else {
+            return back()->withErrors([
+                'login' => 'Email or password incorrect',
+            ]);
+        }
+    }
+    public function logout()
+    {
+
     }
 }

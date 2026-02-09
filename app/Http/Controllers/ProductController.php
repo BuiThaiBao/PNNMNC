@@ -2,76 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\CheckTimeAccess;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
 
-class ProductController extends Controller implements HasMiddleware
+class ProductController extends Controller
 {
-    public static function middleware()
-    {
-        return [
-            CheckTimeAccess::class
-        ];
-    }
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $title = "Product List";
-        return view('product.index', [
-            "title" => $title,
-            "products" => [
-                [
-                    'id' => 1,
-                    'name' => 'Product 1',
-                    'price' => 100,
-                    'description' => 'Description 1',
-                ],
-                [
-                    'id' => 2,
-                    'name' => 'Product 2',
-                    'price' => 100,
-                    'description' => 'Description 2',
-                ],
-                [
-                    'id' => 3,
-                    'name' => 'Product 3',
-                    'price' => 100,
-                    'description' => 'Description 3',
-                ],
-                [
-                    'id' => 4,
-                    'name' => 'Product 4',
-                    'price' => 100,
-                    'description' => 'Description 4',
-                ],
-                [
-                    'id' => 5,
-                    'name' => 'Product 5',
-                    'price' => 100,
-                    'description' => 'Description 5',
-                ],
-                [
-                    'id' => 6,
-                    'name' => 'Product 6',
-                    'price' => 100,
-                    'description' => 'Description 6',
-                ],
-            ]
+        $products = Product::all();
+        return view("admin.product.index", [
+            'products' => $products,
+            'title' => 'Product',
 
         ]);
     }
-    public function getDetail(string $id = "123")
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        return view('product.detail', ['id' => $id]);
-    }
-    public function add()
-    {
-        return view('product.add');
+        return view("admin.product.add");
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        return $request->all();
+        $product = new Product();
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->save();
+        return redirect("product");
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        $product = Product::find($id);
+        return view("admin.product.edit", [
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        $product = Product::find($id);
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->stock = $request->stock;
+        $product->save();
+        return redirect("admin.product");
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        //
     }
 }

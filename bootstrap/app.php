@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -18,7 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // ]);
     
         $middleware->alias([
-            'checkAge' => CheckAge::class
+
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
