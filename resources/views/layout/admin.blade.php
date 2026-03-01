@@ -87,6 +87,7 @@
     <script src="/adminlte/dist/js/demo.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="/adminlte/dist/js/pages/dashboard3.js"></script>
+    @stack('scripts')
 </body>
 
 </html>

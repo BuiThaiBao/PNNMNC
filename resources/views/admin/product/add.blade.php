@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('content')
-    <form action="{{ route('store') }}" method="post">
+    <form action="{{ route('store_product') }}" method="post">
         @csrf
         <div>
             <label for="name">Name</label>

@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('content')
-    <form action="{{ route('update', $product->id) }}" method="post">
+    <form action="{{ route('update_product', $product->id) }}" method="post">
         @csrf
         @method('PUT')
         <div>

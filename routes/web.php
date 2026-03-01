@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TestController;
@@ -29,17 +30,25 @@ Route::prefix('product')
     ->group(function () {
         Route::controller(ProductController::class)->group(function () {
             Route::get('/', 'index')->name('product');
-            Route::get('/add', 'create')->name('create');
-            Route::get('/detail/{id?}', 'getDetail')->name('detail');
-            Route::get('/edit/{id?}', 'edit')->name('edit');
-            Route::post('/store', 'store')->name('store');
-            Route::put('/update/{id?}', 'update')->name('update');
+            Route::get('/add', 'create')->name('create_product');
+            Route::get('/detail/{id?}', 'getDetail')->name('detail_product');
+            Route::get('/edit/{id?}', 'edit')->name('edit_product');
+            Route::post('/store', 'store')->name('store_product');
+            Route::put('/update/{id?}', 'update')->name('update_product');
         });
-        // Route::get('/', [ProductController::class, 'index'])->name('product');
-    
-        // Route::get('/add', [ProductController::class, 'add'])->name('add');
-    
-        // Route::get('/detail/{id?}', [ProductController::class, 'getDetail'])->name('detail');
+    });
+Route::prefix('category')
+    ->group(function () {
+        Route::controller(CategoryController::class)->group(function () {
+            Route::get('/', 'index')->name('category');
+            Route::get('/add', 'create')->name('create_category');
+            Route::get('/detail/{id?}', 'getDetail')->name('detail_category');
+            Route::get('/edit/{id?}', 'edit')->name('edit_category');
+            Route::post('/store', 'store')->name('store_category');
+            Route::put('/update/{id?}', 'update')->name('update_category');
+            Route::get('/delete/{id?}', 'destroy')->name('delete_category');
+            Route::put('/active/{id?}', 'active')->name('active_category');
+        });
     });
 
 Route::resource('test', TestController::class);

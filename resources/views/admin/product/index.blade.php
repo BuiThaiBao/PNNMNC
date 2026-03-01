@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('content')
-    <a href="{{ route('create') }}">Create Product</a>
+    <a href="{{ route('create_product') }}">Create Product</a>
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -18,7 +18,7 @@
                     <td>{{ $product['name'] }}</td>
                     <td>{{ $product['price'] }}</td>
                     <td>{{ $product['stock'] }}</td>
-                    <td><a href="{{ route('edit', $product['id']) }}">Edit</a></td>
+                    <td><a href="{{ route('edit_product', $product['id']) }}">Edit</a></td>
                 </tr>
             @endforeach
         </tbody>
