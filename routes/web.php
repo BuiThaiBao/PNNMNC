@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CustomerProductController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\CheckTimeAccess;
 use Illuminate\Support\Facades\Route;
@@ -13,43 +14,41 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('layout.admin');
 });
-// Route::get('/product', function () {
-//     return view('product.index');
-// });
-// Route::get('/product/add', function () {
-//     return view('product.add');
-// })->name('product.add');
-// Route::get('/product/detail/{id}', function ($id) {
-//     return view('product.detail', ['id' => $id]);
-// })->name('product.detail');
 
+// ============== ADMIN ROUTES ==============
+Route::prefix('admin')->group(function () {
 
-
-Route::prefix('product')
-    // ->middleware('checkTimeAccess')
-    ->group(function () {
-        Route::controller(ProductController::class)->group(function () {
-            Route::get('/', 'index')->name('product');
-            Route::get('/add', 'create')->name('create_product');
-            Route::get('/detail/{id?}', 'getDetail')->name('detail_product');
-            Route::get('/edit/{id?}', 'edit')->name('edit_product');
-            Route::post('/store', 'store')->name('store_product');
-            Route::put('/update/{id?}', 'update')->name('update_product');
+    Route::prefix('product')
+        ->group(function () {
+            Route::controller(ProductController::class)->group(function () {
+                Route::get('/', 'index')->name('product');
+                Route::get('/add', 'create')->name('create_product');
+                Route::get('/detail/{id?}', 'getDetail')->name('detail_product');
+                Route::get('/edit/{id?}', 'edit')->name('edit_product');
+                Route::post('/store', 'store')->name('store_product');
+                Route::put('/update/{id?}', 'update')->name('update_product');
+                Route::get('/delete/{id?}', 'destroy')->name('delete_product');
+                Route::put('/active/{id?}', 'active')->name('active_product');
+            });
         });
-    });
-Route::prefix('category')
-    ->group(function () {
-        Route::controller(CategoryController::class)->group(function () {
-            Route::get('/', 'index')->name('category');
-            Route::get('/add', 'create')->name('create_category');
-            Route::get('/detail/{id?}', 'getDetail')->name('detail_category');
-            Route::get('/edit/{id?}', 'edit')->name('edit_category');
-            Route::post('/store', 'store')->name('store_category');
-            Route::put('/update/{id?}', 'update')->name('update_category');
-            Route::get('/delete/{id?}', 'destroy')->name('delete_category');
-            Route::put('/active/{id?}', 'active')->name('active_category');
+
+    Route::prefix('category')
+        ->group(function () {
+            Route::controller(CategoryController::class)->group(function () {
+                Route::get('/', 'index')->name('category');
+                Route::get('/add', 'create')->name('create_category');
+                Route::get('/detail/{id?}', 'getDetail')->name('detail_category');
+                Route::get('/edit/{id?}', 'edit')->name('edit_category');
+                Route::post('/store', 'store')->name('store_category');
+                Route::put('/update/{id?}', 'update')->name('update_category');
+                Route::get('/delete/{id?}', 'destroy')->name('delete_category');
+                Route::put('/active/{id?}', 'active')->name('active_category');
+            });
         });
-    });
+});
+
+// ============== CUSTOMER ROUTES ==============
+Route::get('/product', [CustomerProductController::class, 'index'])->name('customer.product');
 
 Route::resource('test', TestController::class);
 Route::fallback(function () {
@@ -63,11 +62,6 @@ Route::get('/sinhvien/{name?}/{mssv?}', function (?string $name = "Luong Xuan Hi
 Route::get('/banco/{n?}', function (?int $n = 8) {
     return view('banco', ['n' => $n]);
 });
-
-
-
-
-
 
 
 
@@ -87,4 +81,3 @@ Route::prefix('')->group(function () {
 Route::get('/admin', function () {
     return view('layout.admin');
 })->name('admin');
-

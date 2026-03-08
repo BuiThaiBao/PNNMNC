@@ -47,7 +47,7 @@
         $(document).ready(function () {
             $('.toggle-active').on('change', function () {
                 var categoryId = $(this).data('id');
-                var url = "{{ url('category/active') }}/" + categoryId;
+                var url = "{{ url('admin/category/active') }}/" + categoryId;
 
                 $.ajax({
                     url: url,
